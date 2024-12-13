@@ -7,7 +7,7 @@ Frappes are usually not caffeinated enough, we want a lot of caffeine in ours.
 This project has only one goal: **Speedup Frappe ecosystem by approximately by 2x.**
 
 Approximately, this boils down to:
-- Setup a good benchmark suite consisting benchmarks ranging from microbenchmarks to realistic traces.
+- Set up a good benchmark suite ranging from microbenchmarks to realistic traces.
 - Remove unnecessary overheads wherever possible. Every 0.1% on critical path counts.
 - Make deployments resource efficient by tuning various knobs.
 
@@ -26,7 +26,7 @@ Efficiency improvements are defined similarly:
 
 ### Contributing
 
-This repo is not accepting any external contributions at present.
+At present, this repo is not accepting any external contributions.
 
 ### License
 
