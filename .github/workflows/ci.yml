@@ -27,7 +27,7 @@ jobs:
         ports:
           - 11000:6379
       mariadb:
-        image: mariadb:10.6
+        image: mariadb:11.3
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
@@ -78,7 +78,7 @@ jobs:
       - name: Install MariaDB Client
         run: |
           sudo apt update
-          sudo apt-get install mariadb-client-10.6
+          sudo apt-get install mariadb-client
 
       - name: Setup
         run: |
