@@ -8,7 +8,7 @@ requires-python = ">=3.10"
 readme = "README.md"
 dynamic = ["version"]
 dependencies = [
-    "pyperf==2.8.1" # Installed and managed by bench.
+    "pyperf==2.8.1"
 ]
 
 [build-system]
