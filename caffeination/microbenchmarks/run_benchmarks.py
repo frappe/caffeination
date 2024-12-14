@@ -7,7 +7,7 @@ import frappe
 import pyperf
 from frappe.utils import cstr
 
-from caffeination.microbenchmarks import bench_database, bench_orm, bench_redis
+from caffeination.microbenchmarks import bench_background_jobs, bench_database, bench_orm, bench_redis
 
 BENCHMARK_PREFIX = "bench_"
 
@@ -52,6 +52,7 @@ def discover_benchmarks(benchmark_filter=None):
 		bench_orm,
 		bench_database,
 		bench_redis,
+		bench_background_jobs,
 	]
 
 	benchmarks = []
