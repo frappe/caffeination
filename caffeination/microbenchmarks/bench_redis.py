@@ -10,13 +10,14 @@ def bench_make_key():
 	return keys
 
 
-def bench_set_value():
+def bench_redis_get_set_delete_cycle():
 	for dt in get_all_doctypes():
 		key = f"_test_set_value:{dt}"
 		frappe.cache.set_value(key, cached_get_doc(dt), expires_in_sec=30)
 		assert frappe.cache.exists(key)
 		assert frappe.cache.get_value(key).name == dt
-	frappe.local.cache.clear()
+		frappe.cache.delete_value(key)
+		assert not frappe.cache.exists(key)
 
 
 @lru_cache
