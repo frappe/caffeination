@@ -7,7 +7,13 @@ import frappe
 import pyperf
 from frappe.utils import cstr
 
-from caffeination.microbenchmarks import bench_background_jobs, bench_database, bench_orm, bench_redis
+from caffeination.microbenchmarks import (
+	bench_background_jobs,
+	bench_database,
+	bench_orm,
+	bench_redis,
+	bench_web_requests,
+)
 
 BENCHMARK_PREFIX = "bench_"
 
@@ -48,12 +54,7 @@ def teardown(site):
 
 def discover_benchmarks(benchmark_filter=None):
 	benchmark_filter = cstr(benchmark_filter)
-	benchmark_modules = [
-		bench_orm,
-		bench_database,
-		bench_redis,
-		bench_background_jobs,
-	]
+	benchmark_modules = [bench_orm, bench_database, bench_redis, bench_background_jobs, bench_web_requests]
 
 	benchmarks = []
 	for module in benchmark_modules:
