@@ -24,6 +24,14 @@ def bench_get_cached_value_simple():
 			status.append(frappe.db.get_value("Role", role, "disabled", cache=True))
 
 
+def bench_set_value_simple():
+	return frappe.db.set_value("Role", "Guest", "disabled", 0)  # This is a noop to DB.
+
+
+def bench_delete_value_simple():
+	return frappe.db.delete("Role", {"name": "Not_GUEST"})  # This is a noop to DB.
+
+
 def bench_empty_transaction_cycling():
 	frappe.db.rollback()
 	frappe.db.commit()
