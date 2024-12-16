@@ -1,4 +1,4 @@
-### Caffeination
+### Caffeine
 
 Frappes are usually not caffeinated enough, we want a lot of caffeine in ours.
 
