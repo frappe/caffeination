@@ -69,7 +69,7 @@ def bench_login_page_render():
 
 
 def bench_desk_page_render():
-	resp = request("GET", "/app")
+	resp = request("GET", "/app", auth=True)
 	assert resp.status_code == 200
 
 
