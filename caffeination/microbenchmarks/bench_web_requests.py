@@ -28,6 +28,21 @@ def bench_request_authed_overheads():
 	assert resp.status_code == 200
 
 
+def bench_request_socketio_auth():
+	resp = request("GET", "/api/method/frappe.realtime.get_user_info", auth=True)
+	assert resp.status_code == 200
+
+
+def bench_request_socketio_perm_check():
+	resp = request(
+		"GET",
+		"/api/method/frappe.realtime.has_permission",
+		auth=True,
+		data={"doctype": "Role", "name": "Guest"},
+	)
+	assert resp.status_code == 200
+
+
 def bench_request_getdoc():
 	resp = request(
 		"POST",
