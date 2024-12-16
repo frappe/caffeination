@@ -1,7 +1,6 @@
 from functools import lru_cache
 
 import frappe
-from frappe.desk.reportview import get, get_count
 
 
 def bench_get_doc():
@@ -41,20 +40,6 @@ def bench_get_all():
 
 def bench_get_list():
 	return frappe.get_list("Role", "*", limit=20, run=0)
-
-
-def bench_list_view_query():
-	frappe.local.form_dict = {
-		"doctype": "Role",
-		"fields": '["`tabRole`.`name`","`tabRole`.`owner`","`tabRole`.`creation`","`tabRole`.`modified`","`tabRole`.`modified_by`" ,"`tabRole`.`_user_tags`","`tabRole`.`_comments`","`tabRole`.`_assign`","`tabRole`.`_liked_by`","`tabRole`.`docstatus`","`tabRole`.`idx`","`tabRole`.`disabled`"]',
-		"filters": "[]",
-		"order_by": "`tabRole`.creation desc",
-		"start": "0",
-		"page_length": "20",
-		"group_by": "",
-		"with_comment_count": "1",
-	}
-	return get()
 
 
 def bench_get_all_with_filters():

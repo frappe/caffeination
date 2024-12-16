@@ -1,17 +1,105 @@
+import json
 from functools import lru_cache
 
 import frappe
 from frappe.app import application as _trigger_imports
 from frappe.utils import get_test_client
+from frappe.utils.user import AUTOMATIC_ROLES
+
+TEST_USER = "test@example.com"
+
+
+def request(method, path, data=None, auth=False):
+	client = get_test_client()
+	headers = {"X-Frappe-Site-Name": get_site()}
+	if auth:
+		sid = get_sid()
+		client.set_cookie("sid", sid)
+	return client.open(path, headers=headers, method=method, data=data)
 
 
 def bench_request_overheads():
-	client = get_test_client()
-	for _ in range(100):
-		resp = client.get("/api/method/ping", headers={"X-Frappe-Site-Name": get_site()})
-		assert resp.status_code == 200
+	resp = request("GET", "/api/method/ping")
+	assert resp.status_code == 200
+
+
+def bench_request_authed_overheads():
+	resp = request("GET", "/api/method/ping", auth=True)
+	assert resp.status_code == 200
+
+
+def bench_request_getdoc():
+	resp = request(
+		"POST",
+		"/api/method/frappe.desk.form.load.getdoc",
+		data={"doctype": "Role", "name": "Guest"},
+		auth=True,
+	)
+	assert resp.status_code == 200
+
+
+def bench_list_view_count_query():
+	resp = request(
+		"POST",
+		"/api/method/frappe.desk.reportview.get_count",
+		data={"doctype": "Role", "filters": "[]", "fields": "[]", "distinct": "false", "limit": "1001"},
+		auth=True,
+	)
+	assert resp.status_code == 200
+
+
+def bench_list_view_query():
+	reportview_get_payload = {
+		"doctype": "Role",
+		"fields": '["`tabRole`.`name`","`tabRole`.`owner`","`tabRole`.`creation`","`tabRole`.`modified`","`tabRole`.`modified_by`" ,"`tabRole`.`_user_tags`","`tabRole`.`_comments`","`tabRole`.`_assign`","`tabRole`.`_liked_by`","`tabRole`.`docstatus`","`tabRole`.`idx`","`tabRole`.`disabled`"]',
+		"filters": "[]",
+		"order_by": "`tabRole`.creation desc",
+		"start": "0",
+		"page_length": "20",
+		"group_by": "",
+		"with_comment_count": "1",
+	}
+	resp = request("POST", "/api/method/frappe.desk.reportview.get", data=reportview_get_payload, auth=True)
+	assert resp.status_code == 200
 
 
 @lru_cache
 def get_site():
 	return frappe.local.site
+
+
+@lru_cache
+def get_sid():
+	from frappe.auth import CookieManager, LoginManager
+	from frappe.utils import set_request
+
+	create_test_user(TEST_USER)
+
+	set_request(path="/")
+	frappe.local.cookie_manager = CookieManager()
+	frappe.local.login_manager = LoginManager()
+	frappe.local.login_manager.login_as(TEST_USER)
+	frappe.db.commit()
+	return frappe.session.sid
+
+
+def create_test_user(name):
+	if frappe.db.exists("User", name):
+		return
+
+	user = frappe.new_doc("User")
+	user.email = name
+	user.first_name = "Frappe"
+	user.new_password = frappe.local.conf.admin_password
+	user.send_welcome_email = 0
+	user.time_zone = "Asia/Kolkata"
+	user.flags.ignore_password_policy = True
+	user.insert(ignore_if_duplicate=True)
+
+	user.reload()
+
+	all_roles = set(frappe.get_all("Role", pluck="name"))
+	for role in all_roles - set(AUTOMATIC_ROLES):
+		user.append("roles", {"role": role})
+	user.save()
+	frappe.db.commit()
