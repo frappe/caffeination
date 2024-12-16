@@ -94,14 +94,14 @@ jobs:
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
           bench --site test_site install-app caffeination
-          bench build
         env:
           CI: 'Yes'
 
       - name: Run Tests
-        working-directory: /home/runner/frappe-bench
+        working-directory: /home/runner/frappe-bench/sites
         run: |
           bench --site test_site set-config allow_tests true
-          bench --site test_site run-tests --app caffeination
+          source ../env/bin/activate
+          ../apps/caffeination/caffeination/microbenchmarks/run_benchmarks.py --site test_site -l2 -p2 -w0 --quiet
         env:
           TYPE: server

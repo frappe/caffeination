@@ -22,7 +22,7 @@ def run_microbenchmarks():
 	def update_cmd_line(cmd, args):
 		# Pass our added arguments to workers
 		cmd.extend(["--site", args.site])
-		cmd.extend(["--filter", args.benchmark_filter])
+		cmd.extend(["--filter", cstr(args.benchmark_filter)])
 
 	runner = pyperf.Runner(add_cmdline_args=update_cmd_line)
 
@@ -36,7 +36,7 @@ def run_microbenchmarks():
 	)
 
 	args = runner.argparser.parse_args()
-	benchmarks = discover_benchmarks(args.benchmark_filter)
+	benchmarks = discover_benchmarks(cstr(args.benchmark_filter))
 	setup(args.site)
 	for name, func in benchmarks:
 		runner.bench_func(name, func)
@@ -45,6 +45,7 @@ def run_microbenchmarks():
 
 def setup(site):
 	frappe.init(site)
+	assert frappe.conf.allow_tests
 	frappe.connect()
 
 
@@ -52,8 +53,7 @@ def teardown(site):
 	frappe.destroy()
 
 
-def discover_benchmarks(benchmark_filter=None):
-	benchmark_filter = cstr(benchmark_filter)
+def discover_benchmarks(benchmark_filter):
 	benchmark_modules = [bench_orm, bench_database, bench_redis, bench_background_jobs, bench_web_requests]
 
 	benchmarks = []
