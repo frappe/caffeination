@@ -63,6 +63,16 @@ def bench_list_view_count_query():
 	assert resp.status_code == 200
 
 
+def bench_login_page_render():
+	resp = request("GET", "/login")
+	assert resp.status_code == 200
+
+
+def bench_desk_page_render():
+	resp = request("GET", "/app")
+	assert resp.status_code == 200
+
+
 def bench_list_view_query():
 	reportview_get_payload = {
 		"doctype": "Role",
