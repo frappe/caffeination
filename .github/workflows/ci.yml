@@ -7,7 +7,7 @@ on:
   pull_request:
 
 concurrency:
-  group: develop-caffeination-${{ github.event.number }}
+  group: develop-caffeine-${{ github.event.number }}
   cancel-in-progress: true
 
 jobs:
@@ -90,10 +90,10 @@ jobs:
       - name: Install
         working-directory: /home/runner/frappe-bench
         run: |
-          bench get-app caffeination $GITHUB_WORKSPACE
+          bench get-app caffeine $GITHUB_WORKSPACE
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
-          bench --site test_site install-app caffeination
+          bench --site test_site install-app caffeine
         env:
           CI: 'Yes'
 
@@ -102,6 +102,6 @@ jobs:
         run: |
           bench --site test_site set-config allow_tests true
           source ../env/bin/activate
-          ../apps/caffeination/caffeination/microbenchmarks/run_benchmarks.py --site test_site -l2 -p2 -w0 --quiet
+          ../apps/caffeine/caffeine/microbenchmarks/run_benchmarks.py --site test_site -l2 -p2 -w0 --quiet
         env:
           TYPE: server

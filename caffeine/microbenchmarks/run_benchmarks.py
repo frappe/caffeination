@@ -7,7 +7,7 @@ import frappe
 import pyperf
 from frappe.utils import cstr
 
-from caffeination.microbenchmarks import (
+from caffeine.microbenchmarks import (
 	bench_background_jobs,
 	bench_database,
 	bench_orm,

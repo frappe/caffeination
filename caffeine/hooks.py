@@ -1,5 +1,5 @@
-app_name = "caffeination"
-app_title = "Caffeination"
+app_name = "caffeine"
+app_title = "Caffeine"
 app_publisher = "Frappe"
 app_description = "Benchmarks and performance testing for Frappe ecosystem"
 app_email = "developers@frappe.io"
@@ -13,11 +13,11 @@ app_license = "mit"
 # Each item in the list will be shown as an app in the apps page
 # add_to_apps_screen = [
 # 	{
-# 		"name": "caffeination",
-# 		"logo": "/assets/caffeination/logo.png",
-# 		"title": "Caffeination",
-# 		"route": "/caffeination",
-# 		"has_permission": "caffeination.api.permission.has_app_permission"
+# 		"name": "caffeine",
+# 		"logo": "/assets/caffeine/logo.png",
+# 		"title": "Caffeine",
+# 		"route": "/caffeine",
+# 		"has_permission": "caffeine.api.permission.has_app_permission"
 # 	}
 # ]
 
@@ -25,15 +25,15 @@ app_license = "mit"
 # ------------------
 
 # include js, css files in header of desk.html
-# app_include_css = "/assets/caffeination/css/caffeination.css"
-# app_include_js = "/assets/caffeination/js/caffeination.js"
+# app_include_css = "/assets/caffeine/css/caffeine.css"
+# app_include_js = "/assets/caffeine/js/caffeine.js"
 
 # include js, css files in header of web template
-# web_include_css = "/assets/caffeination/css/caffeination.css"
-# web_include_js = "/assets/caffeination/js/caffeination.js"
+# web_include_css = "/assets/caffeine/css/caffeine.css"
+# web_include_js = "/assets/caffeine/js/caffeine.js"
 
 # include custom scss in every website theme (without file extension ".scss")
-# website_theme_scss = "caffeination/public/scss/website"
+# website_theme_scss = "caffeine/public/scss/website"
 
 # include js, css files in header of web form
 # webform_include_js = {"doctype": "public/js/doctype.js"}
@@ -51,7 +51,7 @@ app_license = "mit"
 # Svg Icons
 # ------------------
 # include app icons in desk
-# app_include_icons = "caffeination/public/icons.svg"
+# app_include_icons = "caffeine/public/icons.svg"
 
 # Home Pages
 # ----------
@@ -78,43 +78,43 @@ app_license = "mit"
 
 # add methods and filters to jinja environment
 # jinja = {
-# 	"methods": "caffeination.utils.jinja_methods",
-# 	"filters": "caffeination.utils.jinja_filters"
+# 	"methods": "caffeine.utils.jinja_methods",
+# 	"filters": "caffeine.utils.jinja_filters"
 # }
 
 # Installation
 # ------------
 
-# before_install = "caffeination.install.before_install"
-# after_install = "caffeination.install.after_install"
+# before_install = "caffeine.install.before_install"
+# after_install = "caffeine.install.after_install"
 
 # Uninstallation
 # ------------
 
-# before_uninstall = "caffeination.uninstall.before_uninstall"
-# after_uninstall = "caffeination.uninstall.after_uninstall"
+# before_uninstall = "caffeine.uninstall.before_uninstall"
+# after_uninstall = "caffeine.uninstall.after_uninstall"
 
 # Integration Setup
 # ------------------
 # To set up dependencies/integrations with other apps
 # Name of the app being installed is passed as an argument
 
-# before_app_install = "caffeination.utils.before_app_install"
-# after_app_install = "caffeination.utils.after_app_install"
+# before_app_install = "caffeine.utils.before_app_install"
+# after_app_install = "caffeine.utils.after_app_install"
 
 # Integration Cleanup
 # -------------------
 # To clean up dependencies/integrations with other apps
 # Name of the app being uninstalled is passed as an argument
 
-# before_app_uninstall = "caffeination.utils.before_app_uninstall"
-# after_app_uninstall = "caffeination.utils.after_app_uninstall"
+# before_app_uninstall = "caffeine.utils.before_app_uninstall"
+# after_app_uninstall = "caffeine.utils.after_app_uninstall"
 
 # Desk Notifications
 # ------------------
 # See frappe.core.notifications.get_notification_config
 
-# notification_config = "caffeination.notifications.get_notification_config"
+# notification_config = "caffeine.notifications.get_notification_config"
 
 # Permissions
 # -----------
@@ -153,39 +153,39 @@ app_license = "mit"
 
 # scheduler_events = {
 # 	"all": [
-# 		"caffeination.tasks.all"
+# 		"caffeine.tasks.all"
 # 	],
 # 	"daily": [
-# 		"caffeination.tasks.daily"
+# 		"caffeine.tasks.daily"
 # 	],
 # 	"hourly": [
-# 		"caffeination.tasks.hourly"
+# 		"caffeine.tasks.hourly"
 # 	],
 # 	"weekly": [
-# 		"caffeination.tasks.weekly"
+# 		"caffeine.tasks.weekly"
 # 	],
 # 	"monthly": [
-# 		"caffeination.tasks.monthly"
+# 		"caffeine.tasks.monthly"
 # 	],
 # }
 
 # Testing
 # -------
 
-# before_tests = "caffeination.install.before_tests"
+# before_tests = "caffeine.install.before_tests"
 
 # Overriding Methods
 # ------------------------------
 #
 # override_whitelisted_methods = {
-# 	"frappe.desk.doctype.event.event.get_events": "caffeination.event.get_events"
+# 	"frappe.desk.doctype.event.event.get_events": "caffeine.event.get_events"
 # }
 #
 # each overriding function accepts a `data` argument;
 # generated from the base implementation of the doctype dashboard,
 # along with any modifications made in other Frappe apps
 # override_doctype_dashboards = {
-# 	"Task": "caffeination.task.get_dashboard_data"
+# 	"Task": "caffeine.task.get_dashboard_data"
 # }
 
 # exempt linked doctypes from being automatically cancelled
@@ -199,13 +199,13 @@ app_license = "mit"
 
 # Request Events
 # ----------------
-# before_request = ["caffeination.utils.before_request"]
-# after_request = ["caffeination.utils.after_request"]
+# before_request = ["caffeine.utils.before_request"]
+# after_request = ["caffeine.utils.after_request"]
 
 # Job Events
 # ----------
-# before_job = ["caffeination.utils.before_job"]
-# after_job = ["caffeination.utils.after_job"]
+# before_job = ["caffeine.utils.before_job"]
+# after_job = ["caffeine.utils.after_job"]
 
 # User Data Protection
 # --------------------
@@ -235,7 +235,7 @@ app_license = "mit"
 # --------------------------------
 
 # auth_hooks = [
-# 	"caffeination.auth.validate"
+# 	"caffeine.auth.validate"
 # ]
 
 # Automatically update python controller files with type annotations for this app.
