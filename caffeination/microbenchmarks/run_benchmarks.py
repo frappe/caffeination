@@ -11,6 +11,7 @@ from caffeination.microbenchmarks import (
 	bench_background_jobs,
 	bench_database,
 	bench_orm,
+	bench_qb,
 	bench_redis,
 	bench_web_requests,
 )
@@ -54,7 +55,14 @@ def teardown(site):
 
 
 def discover_benchmarks(benchmark_filter):
-	benchmark_modules = [bench_orm, bench_database, bench_redis, bench_background_jobs, bench_web_requests]
+	benchmark_modules = [
+		bench_orm,
+		bench_database,
+		bench_redis,
+		bench_background_jobs,
+		bench_web_requests,
+		bench_qb,
+	]
 
 	benchmarks = []
 	for module in benchmark_modules:

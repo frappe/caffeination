@@ -9,6 +9,14 @@ def bench_get_value_simple():
 		status.append(frappe.db.get_value("Role", role, "disabled"))
 
 
+def bench_get_value_with_dict_filters():
+	return frappe.db.get_value("Role", {"creation": (">", "2020-01-01 00:00:00")}, "disabled")
+
+
+def bench_get_value_with_list_filters():
+	return frappe.db.get_value("Role", ["creation", ">", "2020-01-01 00:00:00"], "*")
+
+
 def bench_get_cached_value_simple():
 	status = []
 	for _ in range(10):
@@ -35,6 +43,10 @@ def bench_select_star():
 		results.append(frappe.db.sql("select * from tabRole limit 10", kw))
 
 	return results
+
+
+def bench_sql_select_many_rows():
+	return frappe.db.sql("select * from `tabDocField` order by creation limit 1000")
 
 
 @lru_cache
