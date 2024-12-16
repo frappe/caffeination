@@ -34,6 +34,28 @@ def bench_get_local_cached_doc():
 	return docs
 
 
+def bench_get_all():
+	return frappe.get_all("DocField", "*", limit=1, run=0)
+
+
+def bench_get_list():
+	return frappe.get_list("Role", "*", limit=20, run=0)
+
+
+def bench_get_all_with_filters():
+	return frappe.get_all("Role", {"creation": (">", "2020-01-01 00:00:00")}, "disabled", limit=10, run=0)
+
+
+def bench_get_all_with_many_fields():
+	return frappe.get_all(
+		"Role",
+		{"creation": (">", "2020-01-01 00:00:00")},
+		["disabled", "name", "creation", "modified"],
+		limit=10,
+		run=0,
+	)
+
+
 @lru_cache
 def get_all_roles():
 	return frappe.get_all("Role", order_by="creation asc", limit=10, pluck="name")
