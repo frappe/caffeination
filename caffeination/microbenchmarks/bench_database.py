@@ -48,7 +48,7 @@ def bench_select_star():
 	kwargs = [{}, {"as_list": True}, {"as_dict": True}]
 	results = []
 	for kw in kwargs:
-		results.append(frappe.db.sql("select * from tabRole limit 10", kw))
+		results.append(frappe.db.sql("select * from tabRole order by creation limit 10", kw))
 
 	return results
 
