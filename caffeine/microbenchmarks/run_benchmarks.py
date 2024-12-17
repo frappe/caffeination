@@ -13,6 +13,7 @@ from caffeine.microbenchmarks import (
 	bench_orm,
 	bench_qb,
 	bench_redis,
+	bench_utils,
 	bench_web_requests,
 )
 
@@ -61,6 +62,7 @@ def discover_benchmarks(benchmark_filter):
 		bench_redis,
 		bench_background_jobs,
 		bench_web_requests,
+		bench_utils,
 		bench_qb,
 	]
 
