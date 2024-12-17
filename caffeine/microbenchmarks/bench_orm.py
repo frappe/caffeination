@@ -28,8 +28,8 @@ def bench_get_cached_doc():
 
 def bench_get_local_cached_doc():
 	docs = []
+	doctype = "Role"
 	for role in get_all_roles():
-		doctype = "Role"
 		docs.append(frappe.get_cached_doc(doctype, role))
 	return docs
 
