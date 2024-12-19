@@ -11,7 +11,7 @@ Approximately, this boils down to:
 - Optimize EVERYTHING. Every 0.1% on critical path counts.
 - Make deployments resource efficient by tuning various knobs.
 
-### Running Benchmarks
+### Running Microbenchmarks
 
 This project uses [pyperf](https://pyperf.readthedocs.io/) to write various micro-benchmarks. Follow these steps to run the benchmarks:
 1. Install the app as usual: `bench get-app caffeine`
@@ -45,6 +45,19 @@ Your local setup might not be fit for benchmarking. Follow these steps before ru
 This should get you roughly +/- 1% standard deviation results. 
 
 You can read this post for long-form explanations: https://ankush.dev/p/reliable-benchmarking 
+
+
+### Writing Microbenchmarks
+
+1. Find appropriate `bench_{module}.py` file.
+2. Add a new function with `bench_` prefix, the function body is your benchmark.
+3. If you need to measure something very small (<1ms), then use `NanoBenchmark` class instead of function-based benchmarks.
+4. Be very cautious about how you write a benchmark, ensure that it _actually_ measures what you want to measure. E.g. If you want to measure the performance of `frappe.get_cached_doc` when it fetches data from Redis then you need to ensure that it's not just using a locally cached document.  
+
+
+### E2E load testing
+
+`todo!()`
 
 ### Contributing
 
