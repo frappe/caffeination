@@ -16,6 +16,16 @@ def bench_get_user():
 	return guest, admin
 
 
+def bench_save_doc():
+	# Thid doctype is used because it has nothing,
+	# so we are essentially measuring typical "overheads"
+	# No controversiez plz.
+	frappe.get_doc("Gender", "Other").save()
+
+
+bench_new_doc = NanoBenchmark('frappe.new_doc("Role")')
+
+
 def bench_get_cached_doc():
 	docs = []
 	for role in get_all_roles():
@@ -58,3 +68,6 @@ bench_get_all_with_many_fields = NanoBenchmark(
 @lru_cache
 def get_all_roles():
 	return frappe.get_all("Role", order_by="creation asc", limit=10, pluck="name")
+
+
+bench_doc_to_dict = NanoBenchmark("doc.as_dict()", setup='doc=frappe.get_doc("User", "Guest")')

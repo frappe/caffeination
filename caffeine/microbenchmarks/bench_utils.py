@@ -4,7 +4,7 @@ import time
 import frappe
 from frappe.utils import flt
 from frappe.utils.caching import redis_cache, request_cache, site_cache
-from frappe.utils.data import cint
+from frappe.utils.data import cint, get_datetime
 
 from caffeine.microbenchmarks.utils import NanoBenchmark
 
@@ -98,3 +98,7 @@ bench_cint_on_int = NanoBenchmark(
 bench_unknown_translations = NanoBenchmark("""frappe._("Unknown Strngi", lang="de")""")
 bench_no_translation_required = NanoBenchmark("""frappe._("Unknown Strngi", lang="en")""")
 bench_valid_translation = NanoBenchmark("""frappe._("User", lang="de")""")
+
+bench_parse_datetime = NanoBenchmark(
+	"get_datetime('2042-12-22 00:01:02.000042')", setup="", globals={"get_datetime": get_datetime}
+)
