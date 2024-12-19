@@ -102,6 +102,8 @@ bench_cint_on_int = NanoBenchmark(
 	globals={"cint": cint, "random": random},
 )
 
+bench_get_system_settings = NanoBenchmark("""frappe.get_system_settings("rounding_method")""")
+
 
 bench_unknown_translations = NanoBenchmark("""frappe._("Unknown Strngi", lang="de")""")
 bench_no_translation_required = NanoBenchmark("""frappe._("Unknown Strngi", lang="en")""")
