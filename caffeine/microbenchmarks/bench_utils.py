@@ -93,3 +93,8 @@ bench_cint_on_int = NanoBenchmark(
 	setup="x = random.randint(1, 10000)",
 	globals={"cint": cint, "random": random},
 )
+
+
+bench_unknown_translations = NanoBenchmark("""frappe._("Unknown Strngi", lang="de")""")
+bench_no_translation_required = NanoBenchmark("""frappe._("Unknown Strngi", lang="en")""")
+bench_valid_translation = NanoBenchmark("""frappe._("User", lang="de")""")
