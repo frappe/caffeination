@@ -3,6 +3,9 @@ import time
 import frappe
 from frappe.utils.caching import redis_cache, request_cache, site_cache
 
+# NOTE: decorated functions themselves are benchmarks, since they aren't wrapped by any other
+# function calls we don't need to move them to timeit style statements.
+
 
 @site_cache
 def bench_site_cache_no_arg():
