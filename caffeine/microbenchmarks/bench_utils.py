@@ -1,7 +1,12 @@
+import random
 import time
 
 import frappe
+from frappe.utils import flt
 from frappe.utils.caching import redis_cache, request_cache, site_cache
+from frappe.utils.data import cint
+
+from caffeine.microbenchmarks.utils import NanoBenchmark
 
 # NOTE: decorated functions themselves are benchmarks, since they aren't wrapped by any other
 # function calls we don't need to move them to timeit style statements.
@@ -46,3 +51,45 @@ def bench_redis_cache_deco_without_local_cache():
 def cache_in_redis(num):
 	time.sleep(0.001)
 	return num
+
+
+bench_frappe_dict_getattr = NanoBenchmark("d.x", setup="d=frappe._dict(); d.x=1")
+bench_frappe_dict_setattr = NanoBenchmark("d.x = 1", setup="d=frappe._dict();")
+
+
+bench_flt_typical = NanoBenchmark(
+	"""flt(x, 2, rounding_method="Banker's Rounding")""",
+	setup="x = random.uniform(1, 10000)",
+	globals={"flt": flt, "random": random},
+)
+
+bench_flt_no_rounding = NanoBenchmark(
+	"flt(x)",
+	setup="x = random.uniform(1, 10000)",
+	globals={"flt": flt, "random": random},
+)
+
+bench_flt_str = NanoBenchmark(
+	"flt(x, 2)",
+	setup="x = str(random.uniform(1, 10000))",
+	globals={"flt": flt, "random": random},
+)
+
+bench_cint_on_float = NanoBenchmark(
+	"""cint(x)""",
+	setup="x = random.uniform(1, 10000)",
+	globals={"cint": cint, "random": random},
+)
+
+bench_cint_on_string = NanoBenchmark(
+	"""cint(x)""",
+	setup="x = str(random.randint(1, 10000))",
+	globals={"cint": cint, "random": random},
+)
+
+
+bench_cint_on_int = NanoBenchmark(
+	"""cint(x)""",
+	setup="x = random.randint(1, 10000)",
+	globals={"cint": cint, "random": random},
+)

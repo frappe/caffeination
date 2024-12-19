@@ -1,6 +1,7 @@
 #!/bin/env python3
 
 import inspect
+import random
 from types import FunctionType
 
 import frappe
@@ -64,6 +65,7 @@ def setup(site):
 	frappe.init(site)
 	assert frappe.conf.allow_tests
 	frappe.connect()
+	random.seed(42)  # Ensure consistent results
 
 
 def teardown(site):
