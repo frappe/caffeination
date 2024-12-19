@@ -93,6 +93,7 @@ jobs:
           bench get-app caffeine $GITHUB_WORKSPACE
           bench setup requirements --dev
           bench new-site --db-root-password root --admin-password admin test_site
+          bench --site test_site execute frappe.utils.install.before_tests
           bench --site test_site install-app caffeine
         env:
           CI: 'Yes'
@@ -101,7 +102,6 @@ jobs:
         working-directory: /home/runner/frappe-bench/sites
         run: |
           bench --site test_site set-config allow_tests true
-          bench --site test_site execute frappe.utils.install.before_tests
           bench --site test_site run-microbenchmarks -l2 -p2 -w0 --quiet
         env:
           TYPE: server
