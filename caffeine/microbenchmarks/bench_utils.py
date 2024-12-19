@@ -58,6 +58,14 @@ bench_frappe_dict_setattr = NanoBenchmark("d.x = 1", setup="d=frappe._dict();")
 
 
 bench_flt_typical = NanoBenchmark(
+	"""flt(x, 2)""",
+	setup="x = random.uniform(1, 10000)",
+	globals={"flt": flt, "random": random},
+)
+
+# Rarely this is specified in code.
+# But certain hot loops can benefit from this.
+bench_flt_explicit_rounding = NanoBenchmark(
 	"""flt(x, 2, rounding_method="Banker's Rounding")""",
 	setup="x = random.uniform(1, 10000)",
 	globals={"flt": flt, "random": random},
