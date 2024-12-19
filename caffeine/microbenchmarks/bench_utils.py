@@ -83,24 +83,12 @@ bench_flt_str = NanoBenchmark(
 	globals={"flt": flt, "random": random},
 )
 
-bench_cint_on_float = NanoBenchmark(
-	"""cint(x)""",
-	setup="x = random.uniform(1, 10000)",
-	globals={"cint": cint, "random": random},
-)
-
 bench_cint_on_string = NanoBenchmark(
 	"""cint(x)""",
 	setup="x = str(random.randint(1, 10000))",
 	globals={"cint": cint, "random": random},
 )
 
-
-bench_cint_on_int = NanoBenchmark(
-	"""cint(x)""",
-	setup="x = random.randint(1, 10000)",
-	globals={"cint": cint, "random": random},
-)
 
 bench_get_system_settings = NanoBenchmark("""frappe.get_system_settings("rounding_method")""")
 
