@@ -3,13 +3,9 @@ from functools import lru_cache
 import frappe
 
 from caffeine.microbenchmarks.bench_orm import get_all_roles
+from caffeine.microbenchmarks.utils import NanoBenchmark
 
-
-def bench_make_key():
-	keys = []
-	for dt in get_all_doctypes():
-		keys.append(frappe.cache.make_key(dt))
-	return keys
+bench_make_key = NanoBenchmark(statement="frappe.cache.make_key('a')")
 
 
 def bench_redis_get_set_delete_cycle():
