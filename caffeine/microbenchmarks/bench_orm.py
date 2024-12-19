@@ -2,6 +2,8 @@ from functools import lru_cache
 
 import frappe
 
+from caffeine.microbenchmarks.utils import NanoBenchmark
+
 
 def bench_get_doc():
 	return [frappe.get_doc("Role", r) for r in get_all_roles()]
@@ -34,26 +36,23 @@ def bench_get_local_cached_doc():
 	return docs
 
 
-def bench_get_all():
-	return frappe.get_all("DocField", "*", limit=1, run=0)
+bench_get_all = NanoBenchmark('frappe.get_all("DocField", "*", limit=1, run=0)')
+
+bench_get_list = NanoBenchmark('frappe.get_list("Role", "*", limit=20, run=0)')
 
 
-def bench_get_list():
-	return frappe.get_list("Role", "*", limit=20, run=0)
+bench_get_all_with_filters = NanoBenchmark(
+	'frappe.get_all("Role", {"creation": (">", "2020-01-01 00:00:00")}, "disabled", limit=10, run=0)'
+)
 
-
-def bench_get_all_with_filters():
-	return frappe.get_all("Role", {"creation": (">", "2020-01-01 00:00:00")}, "disabled", limit=10, run=0)
-
-
-def bench_get_all_with_many_fields():
-	return frappe.get_all(
+bench_get_all_with_many_fields = NanoBenchmark(
+	"""frappe.get_all(
 		"Role",
 		{"creation": (">", "2020-01-01 00:00:00")},
 		["disabled", "name", "creation", "modified"],
 		limit=10,
-		run=0,
-	)
+		run=0)"""
+)
 
 
 @lru_cache

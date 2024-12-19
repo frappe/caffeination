@@ -5,7 +5,7 @@ import frappe
 from caffeine.microbenchmarks.bench_orm import get_all_roles
 from caffeine.microbenchmarks.utils import NanoBenchmark
 
-bench_make_key = NanoBenchmark(statement="frappe.cache.make_key('a')")
+bench_make_key = NanoBenchmark("frappe.cache.make_key('a')")
 
 
 def bench_redis_get_set_delete_cycle():

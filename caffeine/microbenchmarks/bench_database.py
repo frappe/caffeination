@@ -2,6 +2,8 @@ from functools import lru_cache
 
 import frappe
 
+from caffeine.microbenchmarks.utils import NanoBenchmark
+
 
 def bench_get_value_simple():
 	status = []
