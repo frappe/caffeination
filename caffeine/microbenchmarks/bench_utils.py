@@ -100,3 +100,10 @@ bench_valid_translation = NanoBenchmark("""frappe._("User", lang="de")""")
 bench_parse_datetime = NanoBenchmark(
 	"get_datetime('2042-12-22 00:01:02.000042')", setup="", globals={"get_datetime": get_datetime}
 )
+
+
+def test_fn(doctype: str, **kwargs):
+	pass
+
+
+bench_frappe_call = NanoBenchmark("frappe.call(fn, {})", globals={"fn": test_fn})
