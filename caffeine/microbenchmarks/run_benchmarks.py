@@ -65,6 +65,7 @@ def setup(site):
 	frappe.init(site)
 	assert frappe.conf.allow_tests
 	frappe.connect()
+	frappe.db.connect()
 	random.seed(42)  # Ensure consistent results
 
 
