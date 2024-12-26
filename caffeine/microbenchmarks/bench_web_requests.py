@@ -88,6 +88,17 @@ def bench_list_view_query():
 	assert resp.status_code == 200
 
 
+from frappe import rate_limiter
+
+
+def bench_rate_limiter():
+	"""Simulate everything that rate limiter typically does."""
+	frappe.conf.rate_limit = {"limit": 28800000, "window": 86400}
+	rate_limiter.apply()
+	rate_limiter.update()
+	frappe.local.rate_limiter.headers()
+
+
 @lru_cache
 def get_site():
 	return frappe.local.site
