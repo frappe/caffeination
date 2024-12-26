@@ -84,16 +84,22 @@ def discover_benchmarks(benchmark_filter):
 		bench_qb,
 	]
 
+	all_benchmarks = set()
 	benchmarks = []
 	for module in benchmark_modules:
-		module_name = module.__name__.split(".")[-1]
+		module_name = module.__name__.split(".")[-1].removeprefix(BENCHMARK_PREFIX)
 		for bench_name, bench in inspect.getmembers(
 			module, predicate=lambda x: isinstance(x, FunctionType | NanoBenchmark)
 		):
 			if bench_name.startswith(BENCHMARK_PREFIX):
-				unique_name = f"{module_name}_{bench_name}"
-				if benchmark_filter in unique_name:
-					benchmarks.append((unique_name, bench))
+				bench_name = module_name + "_" + bench_name.removeprefix(BENCHMARK_PREFIX)
+				if bench_name in all_benchmarks:
+					frappe.throw(
+						f"Another benchmark with same name exists: `{bench_name}`. Please rename the benchmark."
+					)
+				all_benchmarks.add(bench_name)
+				if benchmark_filter in bench_name:
+					benchmarks.append((bench_name, bench))
 
 	return sorted(benchmarks, key=lambda x: x[0])
 
