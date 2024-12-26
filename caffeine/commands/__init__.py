@@ -15,10 +15,14 @@ from frappe.exceptions import SiteNotSpecifiedError
 @click.argument("benchargs", nargs=-1, type=click.UNPROCESSED)
 @pass_context
 def run_benchmarks(ctx, benchargs):
+	import frappe
+
 	if not ctx.sites:
 		raise SiteNotSpecifiedError
 	site = ctx.sites[0]
 	benchargs = ("--site", site) + benchargs
+	frappe.init(site)
+	frappe.cache.flushall()
 
 	from caffeine.microbenchmarks import run_benchmarks
 
