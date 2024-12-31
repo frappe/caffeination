@@ -17,7 +17,7 @@ from caffeine.microbenchmarks import (
 	bench_utils,
 	bench_web_requests,
 )
-from caffeine.microbenchmarks.utils import NanoBenchmark
+from caffeine.microbenchmarks.utils import NanoBenchmark, get_app_last_commit_ref
 
 BENCHMARK_PREFIX = "bench_"
 
@@ -28,7 +28,8 @@ def run_microbenchmarks():
 		cmd.extend(["--site", args.site])
 		cmd.extend(["--filter", cstr(args.benchmark_filter)])
 
-	runner = pyperf.Runner(add_cmdline_args=update_cmd_line)
+	metadata = get_global_metadata()
+	runner = pyperf.Runner(add_cmdline_args=update_cmd_line, metadata=metadata)
 
 	runner.argparser.add_argument(
 		"--filter",
@@ -59,6 +60,13 @@ def run_microbenchmarks():
 		else:
 			raise ValueError("Unknown benchmark type:", type(bench))
 	teardown(args.site)
+
+
+def get_global_metadata() -> dict[str, str]:
+	return {
+		"frappe_commit": get_app_last_commit_ref("frappe"),
+		"caffeine_commit": get_app_last_commit_ref("caffeine"),
+	}
 
 
 def setup(site):
