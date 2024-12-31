@@ -29,3 +29,15 @@ def get_app_last_commit_ref(app):
 		).decode()
 	result = result.strip()
 	return result
+
+
+def get_app_last_commit_date(app):
+	with open(os.devnull, "wb") as null_stream:
+		result = subprocess.check_output(
+			f"git -C ../apps/{app} show --no-patch --format=%ci HEAD",
+			shell=True,
+			stdin=null_stream,
+			stderr=null_stream,
+		).decode()
+	result = result.strip()
+	return result

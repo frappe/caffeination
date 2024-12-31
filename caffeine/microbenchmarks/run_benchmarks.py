@@ -17,7 +17,7 @@ from caffeine.microbenchmarks import (
 	bench_utils,
 	bench_web_requests,
 )
-from caffeine.microbenchmarks.utils import NanoBenchmark, get_app_last_commit_ref
+from caffeine.microbenchmarks.utils import NanoBenchmark, get_app_last_commit_date, get_app_last_commit_ref
 
 BENCHMARK_PREFIX = "bench_"
 
@@ -65,6 +65,7 @@ def run_microbenchmarks():
 def get_global_metadata() -> dict[str, str]:
 	return {
 		"frappe_commit": get_app_last_commit_ref("frappe"),
+		"frappe_commit_date": get_app_last_commit_date("frappe"),
 		"caffeine_commit": get_app_last_commit_ref("caffeine"),
 	}
 
