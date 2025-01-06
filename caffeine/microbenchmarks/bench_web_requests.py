@@ -6,6 +6,8 @@ from frappe.app import application as _trigger_imports
 from frappe.utils import get_test_client
 from frappe.utils.user import AUTOMATIC_ROLES
 
+from caffeine.microbenchmarks.utils import NanoBenchmark
+
 TEST_USER = "test@example.com"
 
 
@@ -97,6 +99,18 @@ def bench_rate_limiter():
 	rate_limiter.apply()
 	rate_limiter.update()
 	frappe.local.rate_limiter.headers()
+
+
+@frappe.whitelist()
+def type_checked_function(x: int, y: str) -> float:
+	return 42.0
+
+
+bench_request_type_checking = NanoBenchmark(
+	"type_checked_function(x=42, y='42')",
+	setup="frappe.flags.in_test = True",
+	globals={"type_checked_function": type_checked_function},
+)
 
 
 @lru_cache
