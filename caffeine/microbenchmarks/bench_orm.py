@@ -38,6 +38,14 @@ def bench_get_cached_doc():
 	return docs
 
 
+def bench_get_meta():
+	metas = []
+	for doctype in get_doctypes():
+		metas.append(frappe.get_meta(doctype))
+	frappe.local.cache.clear()
+	return metas
+
+
 def bench_get_local_cached_doc():
 	docs = []
 	doctype = "Role"
@@ -68,6 +76,11 @@ bench_get_all_with_many_fields = NanoBenchmark(
 @lru_cache
 def get_all_roles():
 	return frappe.get_all("Role", order_by="creation asc", limit=10, pluck="name")
+
+
+@lru_cache
+def get_doctypes(limit=50):
+	return frappe.get_all("DocType", order_by="creation asc", limit=limit, pluck="name")
 
 
 bench_doc_to_dict = NanoBenchmark("doc.as_dict()", setup='doc=frappe.get_doc("User", "Guest")')
