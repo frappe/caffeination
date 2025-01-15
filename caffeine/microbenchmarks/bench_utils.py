@@ -57,6 +57,9 @@ bench_frappe_dict_getattr = NanoBenchmark("d.x", setup="d=frappe._dict(); d.x=1"
 bench_frappe_dict_setattr = NanoBenchmark("d.x = 1", setup="d=frappe._dict();")
 
 
+bench_local_proxy = NanoBenchmark("value_setter = frappe.db.set_value")
+
+
 bench_flt_typical = NanoBenchmark(
 	"""flt(x, 2)""",
 	setup="x = random.uniform(1, 10000)",
