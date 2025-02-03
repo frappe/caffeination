@@ -75,6 +75,13 @@ def bench_desk_page_render():
 	assert resp.status_code == 200
 
 
+def bench_web_save_doc():
+	doc = frappe.get_doc("Gender", "Other").as_dict()
+	payload = {"doc": frappe.as_json(doc), "action": "Save"}
+	resp = request("POST", "/api/method/frappe.desk.form.save.savedocs", auth=True, data=payload)
+	assert resp.status_code == 200
+
+
 def bench_list_view_query():
 	reportview_get_payload = {
 		"doctype": "Role",
